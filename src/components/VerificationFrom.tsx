@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Navbar from './Navbar';
 import type { CertificateData } from './CertificateDetails';
+import { API_BASE_URL } from 'astro:env/client';
 
 interface VerificationFormProps {
     onSuccess: (data: any) => void;
@@ -89,7 +90,7 @@ const VerificationForm: React.FC<VerificationFormProps> = ({ onSuccess }) => {
         }
 
 
-        fetch(`https://channel7.dev.entri.app/api/v9/certificate/validate/?ref=${certificateId}`)
+        fetch(`${API_BASE_URL}/v9/certificate/validate/?ref=${certificateId}`)
             .then(response => response.json())
             .then(data => {
                 const { isValid, courseDetails, message } = data;
@@ -118,7 +119,7 @@ const VerificationForm: React.FC<VerificationFormProps> = ({ onSuccess }) => {
     }
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setCertificateCode(e.target.value);
+        setCertificateCode(e.target.value.trim());
         resetStates();
     }
 
