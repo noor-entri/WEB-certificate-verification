@@ -7,7 +7,6 @@ const HomePage = () => {
     const [certificateData, setCertificateData] = useState<any>(null);
 
     const handleOnFormSuccess = (certificateData: any) => {
-        console.log(certificateData);
         setCertificateData(certificateData);
         setPageState('details');
     };

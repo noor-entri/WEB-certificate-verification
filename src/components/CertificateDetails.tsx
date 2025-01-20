@@ -1,5 +1,4 @@
-import React from 'react';
-import SampleCertificate from "../../public/certificate_sample.png";
+import React, { useEffect, useRef } from 'react';
 import Footer from './Footer';
 import dayjs from 'dayjs';
 
@@ -9,6 +8,7 @@ export interface CertificateData {
     certificateFile: string;
     courseName: string;
     issuedDate: string;
+    isEnhancedVerification: boolean;
     courseDetails: {
         learningOutcomes: {
             title: string;
@@ -34,6 +34,9 @@ const CertificateDetails: React.FC<CertificateDetailsProps> = ({
     courseDetails,
 
 }) => {
+    const isCertificateFilePDF = certificateFile.endsWith('.pdf');
+    const pdfContainerRef = useRef<HTMLIFrameElement>(null);
+
     return (
         <div className="min-h-screen">
             <div className="max-w-4xl mx-auto px-6 pb-16">
@@ -90,11 +93,25 @@ const CertificateDetails: React.FC<CertificateDetailsProps> = ({
                     <h2 className="text-xs md:text-lg text-grayText mb-3">Course Certificate</h2>
                     <h3 className=" md:text-4xl font-semibold mb-4 md:mb-6">{courseName}</h3>
                     <div className="bg-blueContainer p-8 rounded-lg">
-                        <img
-                            src={SampleCertificate.src}
-                            alt="Certificate"
-                            className="w-100 mx-auto"
-                        />
+
+                        {isCertificateFilePDF ? (
+                            <iframe
+                                ref={pdfContainerRef}
+                                src={`${certificateFile}#toolbar=0&navpanes=0&scrollbar=0`}
+                                className="w-full min-h-[200px] md:min-h-[560px]"
+                                onLoad={() => {
+                                    if (pdfContainerRef.current) {
+                                        pdfContainerRef.current.style.height = `${pdfContainerRef.current.contentWindow?.document.body.scrollHeight}px`;
+                                    }
+                                }}
+                            />
+                        ) : (
+                            <img
+                                src={certificateFile}
+                                alt="Certificate"
+                                className="w-100 mx-auto"
+                            />
+                        )}
                     </div>
                 </div>
 

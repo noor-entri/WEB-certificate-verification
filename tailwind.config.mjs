@@ -18,7 +18,6 @@ export default {
 				lightBg: '#F6F6F6',
 				borderLightGray: '#F0F0F0',
 				borderDarkGray: '#2C2C2C',
-				greenText: '#00FF00',
 				redText: '#FF0000'
 			},
 			fontSize: {

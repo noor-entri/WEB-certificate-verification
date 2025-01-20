@@ -37,6 +37,7 @@ const VerificationForm: React.FC<VerificationFormProps> = ({ onSuccess }) => {
             "certificateFile": "https://storage.googleapis.com/entri-certificates/user_certificates/2024/01/test_certificate.pdf",
             "issuedDate": "2024-01-17T10:37:57.123456Z",
             "courseName": "Accounting and Finance",
+            "isEnhancedVerification": true,
             "courseDetails": {
                 "learningOutcomes": [
                     {
@@ -82,6 +83,7 @@ const VerificationForm: React.FC<VerificationFormProps> = ({ onSuccess }) => {
             "certificateFile": "https://storage.googleapis.com/entri-certificates/user_certificates/2024/01/certificate.pdf",
             "issuedDate": "2024-01-17T12:00:00Z",
             "courseDetails": null,
+            "isEnhancedVerification": false,
             "userDetails": {
                 "name": "John Doe",
                 "dateOfBirth": "1990-01-01"
@@ -93,9 +95,9 @@ const VerificationForm: React.FC<VerificationFormProps> = ({ onSuccess }) => {
         fetch(`${API_BASE_URL}/v9/certificate/validate/?ref=${certificateId}`)
             .then(response => response.json())
             .then(data => {
-                const { isValid, courseDetails, message } = data;
+                const { isValid, courseDetails, message, isEnhancedVerification } = data;
                 if (isValid) {
-                    if (courseDetails) {
+                    if (isEnhancedVerification && courseDetails) {
                         onSuccess(data);
                     } else {
                         setIsValid(true);
@@ -165,7 +167,7 @@ const VerificationForm: React.FC<VerificationFormProps> = ({ onSuccess }) => {
                                 {isValid && (
                                     <div className='flex items-center gap-2 mt-3'>
                                         <img src="/icon_verified.png" className="w-6 h-6 inline-block" />
-                                        <p className="text-left text-greenText">
+                                        <p className="text-left text-green-600">
                                             Certificate is valid
                                         </p>
                                     </div>
