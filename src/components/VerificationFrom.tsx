@@ -12,6 +12,7 @@ const VerificationForm: React.FC<VerificationFormProps> = ({ onSuccess }) => {
     const [isLoading, setIsLoading] = useState(false);
     const [isValid, setIsValid] = useState(false);
     const [error, setError] = useState('');
+    const [certificateURL, setCertificateURL] = useState('');
 
     useEffect(() => {
         const query = new URLSearchParams(document.location.search);
@@ -97,12 +98,13 @@ const VerificationForm: React.FC<VerificationFormProps> = ({ onSuccess }) => {
 
         fetch(`${API_BASE_URL}/v9/certificate/validate/?ref=${certificateId}`)
             .then(response => response.json())
-            .then(data => {
-                const { isValid, courseDetails, message, isEnhancedVerification } = data;
+            .then((data: CertificateData) => {
+                const { isValid, certificateFile, courseDetails, message, isEnhancedVerification } = data;
                 if (isValid) {
                     if (isEnhancedVerification && courseDetails) {
-                        onSuccess({ referenceNumber: certificateCode, ...data });
+                        onSuccess({ ...data, referenceNumber: certificateCode });
                     } else {
+                        setCertificateURL(certificateFile);
                         setIsValid(true);
                     }
                 } else {
@@ -171,8 +173,16 @@ const VerificationForm: React.FC<VerificationFormProps> = ({ onSuccess }) => {
                                     <div className='flex items-center gap-2 mt-3'>
                                         <img src="/icon_verified.png" className="w-6 h-6 inline-block" />
                                         <p className="text-left text-green-600">
-                                            Certificate is valid
+                                            Certificate is valid.
                                         </p>
+                                        {certificateURL &&
+                                            <a
+                                                href={certificateURL}
+                                                target='_blank'
+                                                className="text-entriBlue text-xs md:text-sm hover:underline"
+                                            >
+                                                View
+                                            </a>}
                                     </div>
                                 )}
                             </div>

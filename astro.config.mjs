@@ -10,7 +10,7 @@ export default defineConfig({
   integrations: [react(), tailwind()],
   env: {
     schema: {
-      API_BASE_URL: envField.string({ context: "client", access: "public", default: "https://entri.app/api", url: true }),
+      API_BASE_URL: envField.string({ context: "client", access: "public", default: "https://channel7.dev.entri.app/api", url: true }),
     }
   }
 });
