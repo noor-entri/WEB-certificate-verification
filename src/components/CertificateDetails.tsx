@@ -3,6 +3,7 @@ import Footer from './Footer';
 import dayjs from 'dayjs';
 
 export interface CertificateData {
+    referenceNumber: string;
     isValid: boolean;
     message: string;
     certificateFile: string;
@@ -32,7 +33,7 @@ const CertificateDetails: React.FC<CertificateDetailsProps> = ({
     issuedDate,
     courseName,
     courseDetails,
-
+    referenceNumber,
 }) => {
     const isCertificateFilePDF = certificateFile.endsWith('.pdf');
     const pdfContainerRef = useRef<HTMLIFrameElement>(null);
@@ -119,7 +120,7 @@ const CertificateDetails: React.FC<CertificateDetailsProps> = ({
                 <div className="grid md:grid-cols-2 gap-4 md:gap-8 mb-8 md:mb-20">
                     <div className="bg-lightBg border border-borderLightGray px-3 py-2 md:p-4 rounded-lg">
                         <h3 className="text-grayText font-medium text-xs md:text-lg mb-2">Certificate Reference number</h3>
-                        <p className="font-semibold text-sm md:text-2xl">ELCOM0114</p>
+                        <p className="font-semibold text-sm md:text-2xl">{referenceNumber}</p>
                     </div>
                     <div className="bg-lightBg border border-borderLightGray px-3 py-2 md:p-4 rounded-lg">
                         <h3 className="text-grayText font-medium text-xs md:text-lg mb-2">Certifying Organization</h3>

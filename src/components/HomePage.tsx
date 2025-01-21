@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import CertificateDetails from './CertificateDetails';
+import CertificateDetails, { type CertificateData } from './CertificateDetails';
 import VerificationForm from './VerificationFrom';
 
 const HomePage = () => {
     const [pageState, setPageState] = useState('form');
-    const [certificateData, setCertificateData] = useState<any>(null);
+    const [certificateData, setCertificateData] = useState<CertificateData>();
 
     const handleOnFormSuccess = (certificateData: any) => {
         setCertificateData(certificateData);

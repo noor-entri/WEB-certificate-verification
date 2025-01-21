@@ -4,7 +4,7 @@ import type { CertificateData } from './CertificateDetails';
 import { API_BASE_URL } from 'astro:env/client';
 
 interface VerificationFormProps {
-    onSuccess: (data: any) => void;
+    onSuccess: (data: CertificateData) => void;
 }
 
 const VerificationForm: React.FC<VerificationFormProps> = ({ onSuccess }) => {
@@ -25,6 +25,8 @@ const VerificationForm: React.FC<VerificationFormProps> = ({ onSuccess }) => {
     const resetStates = () => {
         setIsValid(false);
         setError('');
+        // remove query params
+        window.history.replaceState({}, document.title, window.location.pathname);
     }
 
     const fetchCertificateData = (certificateId: string) => {
@@ -34,6 +36,7 @@ const VerificationForm: React.FC<VerificationFormProps> = ({ onSuccess }) => {
         const newCertificateData: CertificateData = {
             "isValid": true,
             "message": "Certificate found",
+            "referenceNumber": "2024/01",
             "certificateFile": "https://storage.googleapis.com/entri-certificates/user_certificates/2024/01/test_certificate.pdf",
             "issuedDate": "2024-01-17T10:37:57.123456Z",
             "courseName": "Accounting and Finance",
@@ -98,7 +101,7 @@ const VerificationForm: React.FC<VerificationFormProps> = ({ onSuccess }) => {
                 const { isValid, courseDetails, message, isEnhancedVerification } = data;
                 if (isValid) {
                     if (isEnhancedVerification && courseDetails) {
-                        onSuccess(data);
+                        onSuccess({ referenceNumber: certificateCode, ...data });
                     } else {
                         setIsValid(true);
                     }
