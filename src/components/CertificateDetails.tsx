@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import Footer from './Footer';
 import dayjs from 'dayjs';
 import { entriLinks } from '../utils/constants';
@@ -38,7 +38,15 @@ const CertificateDetails: React.FC<CertificateDetailsProps> = ({
     referenceNumber,
 }) => {
     const isCertificateFilePDF = certificateFile.endsWith('.pdf');
-    const pdfContainerRef = useRef<HTMLIFrameElement>(null);
+    const certificateContainer = useRef<HTMLDivElement>(null);
+    const [showPDF, setShowPDF] = React.useState(false);
+
+    useEffect(() => {
+        if (certificateContainer.current) {
+            console.log(certificateContainer.current.clientWidth);
+            setShowPDF(true)
+        }
+    }, []);
 
     return (
         <div className="min-h-screen">
@@ -91,20 +99,12 @@ const CertificateDetails: React.FC<CertificateDetailsProps> = ({
                 <div className="mb-6 md:mb-12">
                     <h2 className="text-xs md:text-lg text-grayText mb-3">Course Certificate</h2>
                     <h3 className=" md:text-4xl font-semibold mb-4 md:mb-6">{courseName}</h3>
-                    <div className="bg-blueContainer p-8 rounded-lg">
+                    <div className="bg-blueContainer py-4 px-9 md:py-9 rounded-lg">
 
                         {isCertificateFilePDF ? (
-                            // <iframe
-                            //     ref={pdfContainerRef}
-                            //     src={`${certificateFile}#toolbar=0&navpanes=0`}
-                            //     className="w-full min-h-[200px] md:min-h-[560px]"
-                            //     onLoad={() => {
-                            //         if (pdfContainerRef.current) {
-                            //             console.log(pdfContainerRef.current.contentWindow?.innerHeight);
-                            //         }
-                            //     }}
-                            // />
-                            <PDFViewer fileURL={certificateFile} />
+                            <div ref={certificateContainer}>
+                                {showPDF && <PDFViewer fileURL={certificateFile} width={certificateContainer.current?.offsetWidth || 0} />}
+                            </div>
                         ) : (
                             <img
                                 src={certificateFile}
