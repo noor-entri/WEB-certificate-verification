@@ -66,11 +66,11 @@ const CertificateDetails: React.FC<CertificateDetailsProps> = ({
                         <h1 className="text-lg md:text-4xl font-bold md:font-semibold mb-3 md:mb-6 leading-[48px]">{userDetails.name}</h1>
                         <table>
                             <tbody>
-                                <tr>
+                                {userDetails.dateOfBirth && <tr>
                                     <td className="text-xs md:text-base text-[#757575] pr-4">Date of birth</td>
                                     <td>:</td>
                                     <td className='pl-2 text-[#212121] font-medium text-sm md:text-lg'>{dayjs(userDetails.dateOfBirth).format('D-MMMM-YYYY')}</td>
-                                </tr>
+                                </tr>}
                                 {courseDetails.courseDuration && <tr>
                                     <td className="text-xs md:text-base text-[#757575] pr-4">Course Duration</td>
                                     <td>:</td>
