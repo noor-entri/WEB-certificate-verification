@@ -55,7 +55,7 @@ const CertificateDetails: React.FC<CertificateDetailsProps> = ({
                 {/* Profile Section */}
                 <div className="flex flex-col md:flex-row md:items-center gap-6 mt-6 mb-12">
                     <div>
-                        <h1 className="text-lg md:text-4xl font-bold md:font-semibold mb-3 md:mb-6">{userDetails.name}</h1>
+                        <h1 className="text-lg md:text-4xl font-bold md:font-semibold mb-3 md:mb-6 leading-[48px]">{userDetails.name}</h1>
                         <table>
                             <tbody>
                                 <tr>
