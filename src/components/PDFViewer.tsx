@@ -20,7 +20,12 @@ const PDFViewer: React.FC<PDFViewerProps> = ({
 }) => {
 
     return (
-        <Document file={fileURL} className="w-full h-full" >
+        <Document
+            file={fileURL}
+            className="w-full h-full"
+            loading="Loading certificate"
+            error="An error occurred while loading the certificate"
+        >
             <Page
                 pageNumber={1}
                 renderTextLayer={false}

@@ -94,7 +94,7 @@ const VerificationForm: React.FC<VerificationFormProps> = ({ onSuccess }) => {
                                         name='ref'
                                         value={certificateCode}
                                         onChange={handleInputChange}
-                                        className={`block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-700 bg-transparent rounded-lg border border-borderGray focus:outline-none focus:ring-0 focus:border-entriBlue peer ${error && 'border-redText focus:border-redText'}`}
+                                        className={`block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-700 bg-transparent rounded-lg border border-borderGray focus:outline-none focus:ring-0 focus:border-entriBlue focus:border-2 peer ${error && 'border-redText focus:border-redText border-2'}`}
                                         placeholder=""
                                     />
                                     <label

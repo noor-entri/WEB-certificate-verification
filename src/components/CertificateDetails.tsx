@@ -86,7 +86,7 @@ const CertificateDetails: React.FC<CertificateDetailsProps> = ({
                                 </tr>
                             </tbody>
                         </table>
-                        <div className="flex items-start gap-2 mt-3 text-entriBlue bg-blueContainer md:bg-transparent p-3 pl-2 md:p-0">
+                        <div className="flex items-start gap-2 mt-3 text-entriBlue bg-blueContainer md:bg-transparent p-3 pl-2 md:p-0 rounded-lg">
                             <img src="/icon_verified.png" className="w-6 md:w-10 h-6 md:h-10" />
                             <p className='text-xs md:text-base'>
                                 {`${userDetails.name}'s account is verified.`} {courseName && `Entri certifies their successful completion of ${courseName}`}
@@ -149,7 +149,7 @@ const CertificateDetails: React.FC<CertificateDetailsProps> = ({
                 {courseDetails.acquiredSkills && (
                     <div>
                         <h2 className="md:text-4xl font-semibold mb-6">Skills Demonstrated</h2>
-                        <div className="flex flex-wrap gap-4">
+                        <div className="flex flex-wrap gap-4 md:gap-8">
                             {courseDetails.acquiredSkills.map((skill, index) => (
                                 <span key={index} className="px-4 py-2 bg-lightBg text-darkGray text-xs md:text-base rounded-full">
                                     {skill}
