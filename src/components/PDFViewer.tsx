@@ -11,7 +11,7 @@ pdfjs.GlobalWorkerOptions.workerSrc = new URL(
 
 interface PDFViewerProps {
     fileURL: string;
-    width: number;
+    width?: number;
 }
 
 const PDFViewer: React.FC<PDFViewerProps> = ({

@@ -12,15 +12,15 @@ const VerificationForm: React.FC<VerificationFormProps> = ({ onSuccess }) => {
     const [certificateCode, setCertificateCode] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState('');
+    const query = new URLSearchParams(document.location.search);
+    const ref = query.get('ref');
 
     useEffect(() => {
-        const query = new URLSearchParams(document.location.search);
-        const ref = query.get('ref');
         if (ref) {
             setCertificateCode(ref);
             fetchCertificateData(ref);
         }
-    }, []);
+    }, [ref]);
 
     const resetStates = () => {
         setError('');
@@ -33,11 +33,9 @@ const VerificationForm: React.FC<VerificationFormProps> = ({ onSuccess }) => {
         fetch(`${API_BASE_URL}/v9/certificate/validate/?ref=${certificateId}`)
             .then(response => response.json())
             .then((data: CertificateData) => {
-                const { isValid, courseDetails, message } = data;
+                const { isValid, message } = data;
                 if (isValid) {
-                    if (courseDetails) {
-                        onSuccess({ ...data, referenceNumber: certificateCode });
-                    }
+                    onSuccess({ ...data, referenceNumber: ref || certificateCode });
                 } else {
                     setError(message);
                 }

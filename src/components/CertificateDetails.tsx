@@ -43,7 +43,6 @@ const CertificateDetails: React.FC<CertificateDetailsProps> = ({
 
     useEffect(() => {
         if (certificateContainer.current) {
-            console.log(certificateContainer.current.clientWidth);
             setShowPDF(true)
         }
     }, []);
@@ -103,7 +102,7 @@ const CertificateDetails: React.FC<CertificateDetailsProps> = ({
 
                         {isCertificateFilePDF ? (
                             <div ref={certificateContainer}>
-                                {showPDF && <PDFViewer fileURL={certificateFile} width={certificateContainer.current?.offsetWidth || 0} />}
+                                {showPDF && <PDFViewer fileURL={certificateFile} width={certificateContainer.current?.offsetWidth} />}
                             </div>
                         ) : (
                             <img
