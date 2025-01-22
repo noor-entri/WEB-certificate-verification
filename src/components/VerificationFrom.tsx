@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Navbar from './Navbar';
 import type { CertificateData } from './CertificateDetails';
 import { API_BASE_URL } from 'astro:env/client';
+import { entriLinks } from '../utils/constants';
 
 interface VerificationFormProps {
     onSuccess: (data: CertificateData) => void;
@@ -10,9 +11,7 @@ interface VerificationFormProps {
 const VerificationForm: React.FC<VerificationFormProps> = ({ onSuccess }) => {
     const [certificateCode, setCertificateCode] = useState('');
     const [isLoading, setIsLoading] = useState(false);
-    const [isValid, setIsValid] = useState(false);
     const [error, setError] = useState('');
-    const [certificateURL, setCertificateURL] = useState('');
 
     useEffect(() => {
         const query = new URLSearchParams(document.location.search);
@@ -24,7 +23,6 @@ const VerificationForm: React.FC<VerificationFormProps> = ({ onSuccess }) => {
     }, []);
 
     const resetStates = () => {
-        setIsValid(false);
         setError('');
         // remove query params
         window.history.replaceState({}, document.title, window.location.pathname);
@@ -81,12 +79,12 @@ const VerificationForm: React.FC<VerificationFormProps> = ({ onSuccess }) => {
             "statusCode": 200
         }
 
-        const oldCertificateData = {
+        const oldCertificateData: Omit<CertificateData, "referenceNumber"> = {
             "isValid": true,
             "message": "Certificate found",
             "certificateFile": "https://storage.googleapis.com/entri-certificates/user_certificates/2024/01/certificate.pdf",
             "issuedDate": "2024-01-17T12:00:00Z",
-            "courseDetails": null,
+            "courseDetails": {},
             "isEnhancedVerification": false,
             "userDetails": {
                 "name": "John Doe",
@@ -99,13 +97,10 @@ const VerificationForm: React.FC<VerificationFormProps> = ({ onSuccess }) => {
         fetch(`${API_BASE_URL}/v9/certificate/validate/?ref=${certificateId}`)
             .then(response => response.json())
             .then((data: CertificateData) => {
-                const { isValid, certificateFile, courseDetails, message, isEnhancedVerification } = data;
+                const { isValid, courseDetails, message } = data;
                 if (isValid) {
-                    if (isEnhancedVerification && courseDetails) {
+                    if (courseDetails) {
                         onSuccess({ ...data, referenceNumber: certificateCode });
-                    } else {
-                        setCertificateURL(certificateFile);
-                        setIsValid(true);
                     }
                 } else {
                     setError(message);
@@ -136,7 +131,7 @@ const VerificationForm: React.FC<VerificationFormProps> = ({ onSuccess }) => {
 
             <div className='w-full grid grid-cols-8 flex-grow'>
                 {/* Left Section with Illustration */}
-                <div className="bg-blueContainer p-8 flex items-center justify-center col-span-8 md:col-span-3">
+                <div className="md:bg-blueContainer p-8 flex items-center justify-center col-span-8 md:col-span-3">
                     <img
                         src="/illustration_1.png"
                         alt="Certificate Verification Homepage Illustration"
@@ -169,22 +164,6 @@ const VerificationForm: React.FC<VerificationFormProps> = ({ onSuccess }) => {
                                         {error}
                                     </p>
                                 )}
-                                {isValid && (
-                                    <div className='flex items-center gap-2 mt-3'>
-                                        <img src="/icon_verified.png" className="w-6 h-6 inline-block" />
-                                        <p className="text-left text-green-600">
-                                            Certificate is valid.
-                                        </p>
-                                        {certificateURL &&
-                                            <a
-                                                href={certificateURL}
-                                                target='_blank'
-                                                className="text-entriBlue text-xs md:text-sm hover:underline"
-                                            >
-                                                View
-                                            </a>}
-                                    </div>
-                                )}
                             </div>
                             <button
                                 type='submit'
@@ -202,7 +181,7 @@ const VerificationForm: React.FC<VerificationFormProps> = ({ onSuccess }) => {
                                 Entri App is a rapidly growing e-learning platform in India, serving over 10 million users. It offers a diverse range of courses, including government job preparation, coding, digital marketing, spoken English, and finance, all available in six regional languages.
                             </p>
                             <a
-                                href="https://entri.app"
+                                href={entriLinks.entriMainPage}
                                 target='_blank'
                                 className="text-entriBlue text-xs md:text-sm hover:underline"
                             >
