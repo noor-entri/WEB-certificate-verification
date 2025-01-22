@@ -48,7 +48,7 @@ const CertificateDetails: React.FC<CertificateDetailsProps> = ({
     }, []);
 
     return (
-        <div className="min-h-screen">
+        <div className="min-h-screen flex flex-col">
             {/* NavBar */}
             <nav className='shadow-sm'>
                 <div className="max-w-7xl mx-auto py-2 px-4">
@@ -58,7 +58,7 @@ const CertificateDetails: React.FC<CertificateDetailsProps> = ({
                 </div>
             </nav>
 
-            <div className="max-w-7xl mx-auto px-6 pb-16">
+            <div className="max-w-7xl mx-auto flex-grow px-6 pb-16">
 
                 {/* Profile Section */}
                 <div className="flex flex-col md:flex-row md:items-center gap-6 mt-6 mb-12">
