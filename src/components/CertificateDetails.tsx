@@ -44,14 +44,14 @@ const CertificateDetails: React.FC<CertificateDetailsProps> = ({
         <div className="min-h-screen">
             {/* NavBar */}
             <nav className='shadow-sm'>
-                <div className="max-w-4xl mx-auto py-2 px-4">
+                <div className="max-w-7xl mx-auto py-2 px-4">
                     <a className='flex' href={entriLinks.entriMainPage}>
                         <img src="/entri_logo.svg" alt="Brand Logo" className="w-[120px]" />
                     </a>
                 </div>
             </nav>
 
-            <div className="max-w-4xl mx-auto px-6 pb-16">
+            <div className="max-w-7xl mx-auto px-6 pb-16">
 
                 {/* Profile Section */}
                 <div className="flex flex-col md:flex-row md:items-center gap-6 mt-6 mb-12">

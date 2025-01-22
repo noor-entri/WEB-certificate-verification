@@ -3,7 +3,7 @@ import { entriLinks } from "../utils/constants";
 function Footer() {
     return (
         <footer className="bg-footerBg text-sm text-footerText py-12">
-            <div className="max-w-4xl mx-auto flex flex-col px-6 gap-6">
+            <div className="max-w-7xl mx-auto flex flex-col px-6 gap-6">
                 <a className='flex' href={entriLinks.entriMainPage}>
                     <img
                         src="/entri_logo.svg"
