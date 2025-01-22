@@ -150,7 +150,7 @@ const CertificateDetails: React.FC<CertificateDetailsProps> = ({
                         <h2 className="md:text-4xl font-semibold mb-6">Skills Demonstrated</h2>
                         <div className="flex flex-wrap gap-4 md:gap-8">
                             {courseDetails.acquiredSkills.map((skill, index) => (
-                                <span key={index} className="px-4 py-2 bg-lightBg text-darkGray text-xs md:text-base rounded-full">
+                                <span key={index} className="p-3 rounded-xl md:px-4 md:py-2 bg-lightBg text-darkGray text-xs md:text-base md:rounded-full">
                                     {skill}
                                 </span>
                             ))}
