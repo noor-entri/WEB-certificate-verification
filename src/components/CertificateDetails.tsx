@@ -96,7 +96,7 @@ const CertificateDetails: React.FC<CertificateDetailsProps> = ({
                             <iframe
                                 ref={pdfContainerRef}
                                 src={`${certificateFile}#toolbar=0&navpanes=0`}
-                                className="w-full h-min-[300px] md:h-[560px]"
+                                className="w-full min-h-[200px] md:min-h-[560px]"
                                 onLoad={() => {
                                     if (pdfContainerRef.current) {
                                         console.log(pdfContainerRef.current.contentWindow?.innerHeight);
