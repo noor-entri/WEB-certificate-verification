@@ -24,8 +24,6 @@ const VerificationForm: React.FC<VerificationFormProps> = ({ onSuccess }) => {
 
     const resetStates = () => {
         setError('');
-        // remove query params
-        window.history.replaceState({}, document.title, window.location.pathname);
     }
 
     const fetchCertificateData = (certificateId: string) => {
