@@ -86,7 +86,7 @@ const CertificateDetails: React.FC<CertificateDetailsProps> = ({
                                 </tr>
                             </tbody>
                         </table>
-                        <div className="flex items-start gap-2 mt-3 text-entriBlue bg-blueContainer md:bg-transparent p-3 pl-2 md:p-0 rounded-lg">
+                        <div className="flex items-start md:items-center gap-2 mt-3 text-entriBlue bg-blueContainer md:bg-transparent p-3 pl-2 md:p-0 rounded-lg">
                             <img src="/icon_verified.png" className="w-6 md:w-10 h-6 md:h-10" />
                             <p className='text-xs md:text-base'>
                                 {`${userDetails.name}'s account is verified.`} {courseName && `Entri certifies their successful completion of ${courseName}`}
