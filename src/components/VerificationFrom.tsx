@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Navbar from './Navbar';
 import type { CertificateData } from './CertificateDetails';
 import { API_BASE_URL } from 'astro:env/client';
+import { entriLinks } from '../utils/constants';
 
 interface VerificationFormProps {
     onSuccess: (data: CertificateData) => void;
@@ -10,103 +11,31 @@ interface VerificationFormProps {
 const VerificationForm: React.FC<VerificationFormProps> = ({ onSuccess }) => {
     const [certificateCode, setCertificateCode] = useState('');
     const [isLoading, setIsLoading] = useState(false);
-    const [isValid, setIsValid] = useState(false);
     const [error, setError] = useState('');
-    const [certificateURL, setCertificateURL] = useState('');
+    const query = new URLSearchParams(document.location.search);
+    const ref = query.get('ref');
 
     useEffect(() => {
-        const query = new URLSearchParams(document.location.search);
-        const ref = query.get('ref');
         if (ref) {
             setCertificateCode(ref);
             fetchCertificateData(ref);
         }
-    }, []);
+    }, [ref]);
 
     const resetStates = () => {
-        setIsValid(false);
         setError('');
-        // remove query params
-        window.history.replaceState({}, document.title, window.location.pathname);
     }
 
     const fetchCertificateData = (certificateId: string) => {
         resetStates();
         setIsLoading(true);
 
-        const newCertificateData: CertificateData = {
-            "isValid": true,
-            "message": "Certificate found",
-            "referenceNumber": "2024/01",
-            "certificateFile": "https://storage.googleapis.com/entri-certificates/user_certificates/2024/01/test_certificate.pdf",
-            "issuedDate": "2024-01-17T10:37:57.123456Z",
-            "courseName": "Accounting and Finance",
-            "isEnhancedVerification": true,
-            "courseDetails": {
-                "learningOutcomes": [
-                    {
-                        title: "Fundamentals of Accounting",
-                        description: "Established a solid foundation in accounting principles, essential for accurate financial management and reporting"
-                    },
-                    {
-                        title: "Computerized Accounting (Tally Prime)",
-                        description: "Gained hands-on experience with industry-standard accounting software, streamlining financial operations."
-                    },
-                    {
-                        title: "Business Structure and Banking Essentials",
-                        description: "Acquired a comprehensive understanding of business frameworks and banking functions critical to corporate success."
-                    },
-                    {
-                        title: "Corporate and Labour Law",
-                        description: "Developed proficiency in essential legal regulations governing businesses and employee rights, ensuring compliance and risk management."
-                    }
-                ],
-                "acquiredSkills": [
-                    "Financial Accounting",
-                    "Business Finance",
-                    "Budgeting & Forecasting",
-                    "Financial Analysis",
-                    "Tax Compliance",
-                    "Labour Law",
-                    "Corporate Law",
-                    "Financial Reporting",
-                    "Professional Communication",
-                ],
-                "courseDuration": "6 months"
-            },
-            "userDetails": {
-                "name": "John Doe",
-                "dateOfBirth": "1990-01-01"
-            },
-            "statusCode": 200
-        }
-
-        const oldCertificateData = {
-            "isValid": true,
-            "message": "Certificate found",
-            "certificateFile": "https://storage.googleapis.com/entri-certificates/user_certificates/2024/01/certificate.pdf",
-            "issuedDate": "2024-01-17T12:00:00Z",
-            "courseDetails": null,
-            "isEnhancedVerification": false,
-            "userDetails": {
-                "name": "John Doe",
-                "dateOfBirth": "1990-01-01"
-            },
-            "statusCode": 200
-        }
-
-
         fetch(`${API_BASE_URL}/v9/certificate/validate/?ref=${certificateId}`)
             .then(response => response.json())
             .then((data: CertificateData) => {
-                const { isValid, certificateFile, courseDetails, message, isEnhancedVerification } = data;
+                const { isValid, message } = data;
                 if (isValid) {
-                    if (isEnhancedVerification && courseDetails) {
-                        onSuccess({ ...data, referenceNumber: certificateCode });
-                    } else {
-                        setCertificateURL(certificateFile);
-                        setIsValid(true);
-                    }
+                    onSuccess({ ...data, referenceNumber: ref || certificateCode });
                 } else {
                     setError(message);
                 }
@@ -136,7 +65,7 @@ const VerificationForm: React.FC<VerificationFormProps> = ({ onSuccess }) => {
 
             <div className='w-full grid grid-cols-8 flex-grow'>
                 {/* Left Section with Illustration */}
-                <div className="bg-blueContainer p-8 flex items-center justify-center col-span-8 md:col-span-3">
+                <div className="md:bg-blueContainer p-8 flex items-center justify-center col-span-8 md:col-span-3">
                     <img
                         src="/illustration_1.png"
                         alt="Certificate Verification Homepage Illustration"
@@ -154,36 +83,27 @@ const VerificationForm: React.FC<VerificationFormProps> = ({ onSuccess }) => {
                         </p>
                         <form onSubmit={handleFormSubmit}>
                             <div className="mb-6">
-                                <input
-                                    type="text"
-                                    id="certificate-code"
-                                    name='ref'
-                                    value={certificateCode}
-                                    onChange={handleInputChange}
-                                    className={`w-full px-4 py-3 border ${error ? 'border-redText' : 'border-borderGray'
-                                        } rounded-lg focus:ring-2 focus:ring-entriBlue focus:border-transparent`}
-                                    placeholder="Certificate Reference Code"
-                                />
+                                <div className='relative'>
+                                    <input
+                                        type="text"
+                                        id="certificate_code_input"
+                                        name='ref'
+                                        value={certificateCode}
+                                        onChange={handleInputChange}
+                                        className={`block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-700 bg-transparent rounded-lg border border-borderGray focus:outline-none focus:ring-0 focus:border-entriBlue focus:border-2 peer ${error && 'border-redText focus:border-redText border-2'}`}
+                                        placeholder=""
+                                    />
+                                    <label
+                                        htmlFor="certificate_code_input"
+                                        className={`absolute text-sm ${error ? 'text-redText' : 'text-gray-500'} duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-entriBlue peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1 ${error && 'text-redText peer-focus:text-redText'}`}
+                                    >
+                                        Certificate Reference Code
+                                    </label>
+                                </div>
                                 {error && (
                                     <p className="ml-4 mt-2 text-left text-xs text-redText">
                                         {error}
                                     </p>
-                                )}
-                                {isValid && (
-                                    <div className='flex items-center gap-2 mt-3'>
-                                        <img src="/icon_verified.png" className="w-6 h-6 inline-block" />
-                                        <p className="text-left text-green-600">
-                                            Certificate is valid.
-                                        </p>
-                                        {certificateURL &&
-                                            <a
-                                                href={certificateURL}
-                                                target='_blank'
-                                                className="text-entriBlue text-xs md:text-sm hover:underline"
-                                            >
-                                                View
-                                            </a>}
-                                    </div>
                                 )}
                             </div>
                             <button
@@ -202,7 +122,7 @@ const VerificationForm: React.FC<VerificationFormProps> = ({ onSuccess }) => {
                                 Entri App is a rapidly growing e-learning platform in India, serving over 10 million users. It offers a diverse range of courses, including government job preparation, coding, digital marketing, spoken English, and finance, all available in six regional languages.
                             </p>
                             <a
-                                href="https://entri.app"
+                                href={entriLinks.entriMainPage}
                                 target='_blank'
                                 className="text-entriBlue text-xs md:text-sm hover:underline"
                             >
