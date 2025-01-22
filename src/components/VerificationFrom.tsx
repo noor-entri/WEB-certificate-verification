@@ -149,16 +149,33 @@ const VerificationForm: React.FC<VerificationFormProps> = ({ onSuccess }) => {
                         </p>
                         <form onSubmit={handleFormSubmit}>
                             <div className="mb-6">
-                                <input
-                                    type="text"
-                                    id="certificate-code"
-                                    name='ref'
-                                    value={certificateCode}
-                                    onChange={handleInputChange}
-                                    className={`w-full px-4 py-3 border ${error ? 'border-redText' : 'border-borderGray'
-                                        } rounded-lg focus:ring-2 focus:ring-entriBlue focus:border-transparent`}
-                                    placeholder="Certificate Reference Code"
-                                />
+                                <div className='relative'>
+                                    <input
+                                        type="text"
+                                        id="certificate_code_input"
+                                        name='ref'
+                                        value={certificateCode}
+                                        onChange={handleInputChange}
+                                        className={`block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-700 bg-transparent rounded-lg border border-borderGray focus:outline-none focus:ring-0 focus:border-entriBlue peer ${error && 'border-redText focus:border-redText' }`}
+                                        placeholder=""
+                                    />
+                                    <label
+                                        htmlFor="certificate_code_input"
+                                        className={`absolute text-sm ${error ? 'text-redText' : 'text-gray-500'} duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-white px-2 peer-focus:px-2 peer-focus:text-entriBlue peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:top-1/2 peer-focus:top-2 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto start-1 ${error && 'text-redText peer-focus:text-redText'}`}
+                                    >
+                                        Certificate Reference Code
+                                    </label>
+                                    {/* <input
+                                        type="text"
+                                        id="certificate-code"
+                                        name='ref'
+                                        value={certificateCode}
+                                        onChange={handleInputChange}
+                                        className={`w-full px-4 py-3 border ${error ? 'border-redText' : 'border-borderGray'
+                                            } rounded-lg focus:ring-2 focus:ring-entriBlue focus:border-transparent`}
+                                        // placeholder="Certificate Reference Code"
+                                    /> */}
+                                </div>
                                 {error && (
                                     <p className="ml-4 mt-2 text-left text-xs text-redText">
                                         {error}
