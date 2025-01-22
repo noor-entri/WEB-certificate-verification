@@ -2,6 +2,7 @@ import React, { useRef } from 'react';
 import Footer from './Footer';
 import dayjs from 'dayjs';
 import { entriLinks } from '../utils/constants';
+import PDFViewer from './PDFViewer';
 
 export interface CertificateData {
     referenceNumber: string;
@@ -93,16 +94,17 @@ const CertificateDetails: React.FC<CertificateDetailsProps> = ({
                     <div className="bg-blueContainer p-8 rounded-lg">
 
                         {isCertificateFilePDF ? (
-                            <iframe
-                                ref={pdfContainerRef}
-                                src={`${certificateFile}#toolbar=0&navpanes=0`}
-                                className="w-full min-h-[200px] md:min-h-[560px]"
-                                onLoad={() => {
-                                    if (pdfContainerRef.current) {
-                                        console.log(pdfContainerRef.current.contentWindow?.innerHeight);
-                                    }
-                                }}
-                            />
+                            // <iframe
+                            //     ref={pdfContainerRef}
+                            //     src={`${certificateFile}#toolbar=0&navpanes=0`}
+                            //     className="w-full min-h-[200px] md:min-h-[560px]"
+                            //     onLoad={() => {
+                            //         if (pdfContainerRef.current) {
+                            //             console.log(pdfContainerRef.current.contentWindow?.innerHeight);
+                            //         }
+                            //     }}
+                            // />
+                            <PDFViewer fileURL={certificateFile} />
                         ) : (
                             <img
                                 src={certificateFile}

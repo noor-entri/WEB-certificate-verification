@@ -32,68 +32,6 @@ const VerificationForm: React.FC<VerificationFormProps> = ({ onSuccess }) => {
         resetStates();
         setIsLoading(true);
 
-        const newCertificateData: CertificateData = {
-            "isValid": true,
-            "message": "Certificate found",
-            "referenceNumber": "2024/01",
-            "certificateFile": "https://storage.googleapis.com/entri-certificates/user_certificates/2024/01/test_certificate.pdf",
-            "issuedDate": "2024-01-17T10:37:57.123456Z",
-            "courseName": "Accounting and Finance",
-            "isEnhancedVerification": true,
-            "courseDetails": {
-                "learningOutcomes": [
-                    {
-                        title: "Fundamentals of Accounting",
-                        description: "Established a solid foundation in accounting principles, essential for accurate financial management and reporting"
-                    },
-                    {
-                        title: "Computerized Accounting (Tally Prime)",
-                        description: "Gained hands-on experience with industry-standard accounting software, streamlining financial operations."
-                    },
-                    {
-                        title: "Business Structure and Banking Essentials",
-                        description: "Acquired a comprehensive understanding of business frameworks and banking functions critical to corporate success."
-                    },
-                    {
-                        title: "Corporate and Labour Law",
-                        description: "Developed proficiency in essential legal regulations governing businesses and employee rights, ensuring compliance and risk management."
-                    }
-                ],
-                "acquiredSkills": [
-                    "Financial Accounting",
-                    "Business Finance",
-                    "Budgeting & Forecasting",
-                    "Financial Analysis",
-                    "Tax Compliance",
-                    "Labour Law",
-                    "Corporate Law",
-                    "Financial Reporting",
-                    "Professional Communication",
-                ],
-                "courseDuration": "6 months"
-            },
-            "userDetails": {
-                "name": "John Doe",
-                "dateOfBirth": "1990-01-01"
-            },
-            "statusCode": 200
-        }
-
-        const oldCertificateData: Omit<CertificateData, "referenceNumber"> = {
-            "isValid": true,
-            "message": "Certificate found",
-            "certificateFile": "https://storage.googleapis.com/entri-certificates/user_certificates/2024/01/certificate.pdf",
-            "issuedDate": "2024-01-17T12:00:00Z",
-            "courseDetails": {},
-            "isEnhancedVerification": false,
-            "userDetails": {
-                "name": "John Doe",
-                "dateOfBirth": "1990-01-01"
-            },
-            "statusCode": 200
-        }
-
-
         fetch(`${API_BASE_URL}/v9/certificate/validate/?ref=${certificateId}`)
             .then(response => response.json())
             .then((data: CertificateData) => {
@@ -156,7 +94,7 @@ const VerificationForm: React.FC<VerificationFormProps> = ({ onSuccess }) => {
                                         name='ref'
                                         value={certificateCode}
                                         onChange={handleInputChange}
-                                        className={`block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-700 bg-transparent rounded-lg border border-borderGray focus:outline-none focus:ring-0 focus:border-entriBlue peer ${error && 'border-redText focus:border-redText' }`}
+                                        className={`block px-2.5 pb-2.5 pt-4 w-full text-sm text-gray-700 bg-transparent rounded-lg border border-borderGray focus:outline-none focus:ring-0 focus:border-entriBlue peer ${error && 'border-redText focus:border-redText'}`}
                                         placeholder=""
                                     />
                                     <label
@@ -165,16 +103,6 @@ const VerificationForm: React.FC<VerificationFormProps> = ({ onSuccess }) => {
                                     >
                                         Certificate Reference Code
                                     </label>
-                                    {/* <input
-                                        type="text"
-                                        id="certificate-code"
-                                        name='ref'
-                                        value={certificateCode}
-                                        onChange={handleInputChange}
-                                        className={`w-full px-4 py-3 border ${error ? 'border-redText' : 'border-borderGray'
-                                            } rounded-lg focus:ring-2 focus:ring-entriBlue focus:border-transparent`}
-                                        // placeholder="Certificate Reference Code"
-                                    /> */}
                                 </div>
                                 {error && (
                                     <p className="ml-4 mt-2 text-left text-xs text-redText">
