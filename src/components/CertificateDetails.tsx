@@ -47,6 +47,10 @@ const CertificateDetails: React.FC<CertificateDetailsProps> = ({
         }
     }, []);
 
+    const certificateVerificationMessage = courseName ?
+        `${userDetails.name}'s account is verified. Entri certifies their successful completion of ${courseName}`
+        : `${userDetails.name}'s certificate is verified by Entri`;
+
     return (
         <div className="min-h-screen flex flex-col">
             {/* NavBar */}
@@ -61,7 +65,7 @@ const CertificateDetails: React.FC<CertificateDetailsProps> = ({
             <div className="max-w-7xl w-full mx-auto flex-grow px-6 pb-16">
 
                 {/* Profile Section */}
-                <div className="flex flex-col md:flex-row md:items-center gap-6 mt-6 mb-12">
+                <div className="flex flex-col md:flex-row md:items-center gap-6 mt-6">
                     <div>
                         <h1 className="text-lg md:text-4xl font-bold md:font-semibold mb-3 md:mb-6 leading-[48px]">{userDetails.name}</h1>
                         <table>
@@ -88,11 +92,13 @@ const CertificateDetails: React.FC<CertificateDetailsProps> = ({
                         <div className="flex items-start md:items-center gap-2 mt-3 text-entriBlue bg-blueContainer md:bg-transparent p-3 pl-2 md:p-0 rounded-lg">
                             <img src="/icon_verified.png" className="w-6 md:w-10 h-6 md:h-10" />
                             <p className='text-xs md:text-base'>
-                                {`${userDetails.name}'s account is verified.`} {courseName && `Entri certifies their successful completion of ${courseName}`}
+                                {certificateVerificationMessage}
                             </p>
                         </div>
                     </div>
                 </div>
+
+                <div className="flex-grow border-t mt-4 md:mt-12 mb-8 md:mb-20 border-borderLightGray"></div>
 
                 {/* Certificate Section */}
                 <div className="mb-6 md:mb-12">
@@ -150,7 +156,7 @@ const CertificateDetails: React.FC<CertificateDetailsProps> = ({
                         <h2 className="md:text-4xl font-semibold mb-6">Skills Demonstrated</h2>
                         <div className="flex flex-wrap gap-4 md:gap-8">
                             {courseDetails.acquiredSkills.map((skill, index) => (
-                                <span key={index} className="p-3 rounded-xl md:px-4 md:py-2 bg-lightBg text-darkGray text-xs md:text-base md:rounded-full">
+                                <span key={index} className="p-3 rounded-xl md:px-4 md:py-2 bg-lightBg text-darkGray text-xs md:text-base md:rounded-full w-[calc(50%-0.5rem)] md:w-auto">
                                     {skill}
                                 </span>
                             ))}
